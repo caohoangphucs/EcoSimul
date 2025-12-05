@@ -21,7 +21,7 @@ public class World {
     }
     public List<Entity> entities = new ArrayList<>();
     public World() {
-        this.spatialGrid = new SpatialGrid(screenWidth, screenHeight, 100);
+        this.spatialGrid = new SpatialGrid(1707,1067, 100);
         this.collisionSystem = new CollisionSystem();
         this.resolver = new Resolver();
         this.physic = new Physic();
@@ -36,24 +36,24 @@ public class World {
         spatialGrid.clear();
         //Update spacialGrid for faster collision checking
         for (Entity e : entities) {
-            spatialGrid.add((Collider) e);
+            spatialGrid.add(e.collider);
         }
         for (Entity entity : entities) {
             physic.update(entity, dt);
 
             //Collision border
             BorderTouchType borderTouchType = collisionSystem.isBorderCollision(entity.collider, screenWidth, screenHeight);
-            if (borderTouchType != BorderTouchType.NONE ) {
+            if (borderTouchType != BorderTouchType.NONE) {
                 resolver.resolveBorder(entity.collider, borderTouchType, screenWidth, screenHeight);
             }
 
             //Collision with other ball
             for (Collider entity2 : spatialGrid.getNeighbors(entity.collider)) {
-                System.out.println(spatialGrid.getNeighbors(entity.collider).toString());
-                Collider col =  (Collider) entity2;
+                Collider col = (Collider) entity2;
                 if (col != entity.collider) {
-                        if (!collisionSystem.isCollision(entity.collider, col)) continue;
+                    if (collisionSystem.isCollision(entity.collider, col))
                         resolver.resolve(new Collision(entity.collider, col, 1.1f));
+                }
             }
         }
 
@@ -62,7 +62,7 @@ public class World {
             addEntity(e);
         }
     }
-        }
+
 
     public void setScreenHeight(int screenHeight) {
         this.screenHeight = screenHeight;

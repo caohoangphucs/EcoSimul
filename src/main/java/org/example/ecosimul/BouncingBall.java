@@ -35,6 +35,7 @@ public class BouncingBall extends Application {
             @Override
             public void run(long dt) {
                 world.update(dt);
+                renderer.update(dt);
             }
         });
 
@@ -48,8 +49,7 @@ public class BouncingBall extends Application {
         stage.setTitle("Multi-Bounce + Collision");
         stage.show();
 
-        ballGenerator.generateAtPoint(world, 50, 50, 2000, 5, 30, -10, 15);
-
+        ballGenerator.generateAtPoint(world, 50, 50, 10, 50, 30, -100, 500);
 
         new AnimationTimer() {
             @Override

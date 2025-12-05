@@ -26,7 +26,7 @@ public class SpatialGrid {
         }
     }
 
-    public void add(org.example.ecosimul.core.physic.collision.Collider b) {
+    public void add(Collider b) {
         int cx = (int)(b.getX() / cellSize);
         int cy = (int)(b.getY() / cellSize);
 
